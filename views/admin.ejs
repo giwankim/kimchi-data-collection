@@ -1,0 +1,42 @@
+<%- include('_header') -%>
+
+<h3 class="text-center">관리자</h3>
+
+<div class="container">
+  <div class="table-responsive-sm">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>주소</th>
+          <th>브랜드</th>
+          <th>면적</th>
+          <th>소비량</th>
+          <th>승인</th>
+          <th class="d-print-none">
+            <a class="btn btn-sm btn-success" href="/create">추가</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const restaurant of model) { %>
+          <tr>
+            <td><%= restaurant.name %></td>
+            <td><%= [restaurant.address, restaurant.detail_address, restaurant.extra_address, restaurant.zip].join(", ") %></td>
+            <td><%= restaurant.brand %></td>
+            <td><%= restaurant.area %></td>
+            <td><%= restaurant.consumption %></td>
+            <td><%= restaurant.approved %></td>
+            <td class="d-print-none">
+              <a class="btn btn-sm btn-warning" href="/edit/<%= restaurant.id %>">수정</a>
+              <a class="btn btn-sm btn-danger" href="/delete/<%= restaurant.id %>">삭제</a>
+              <a class="btn btn-sm btn-primary" href="/approve/<%= restaurant.id %>">승인</a>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('_footer') -%>
