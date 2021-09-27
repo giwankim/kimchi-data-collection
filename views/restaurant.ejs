@@ -1,51 +1,97 @@
 <%- include("_header") -%>
 
 <h3 class="text-center">식당 등록</h3>
-  <div class="container">
-    <form>
-      <div class="form-row mb-3">
-        <label for="name">이름:</label>
-        <input class="form-control" type="text" id="name" placeholder="김치음식점">
-      </div>
 
-      <div class="form-row align-items-center">
-        <div class="col-auto">
-          <label for="postcode">우편번호:</label>
-          <input type="text" class="form-control" id="postcode" placeholder="우편번호">
-        </div>
-        <div class="col-auto">
-          <input type="button" class="btn btn-sm btn-outline-success" onclick="execDaumPostcode()" value="우편번호 찾기">
+<div class="container py-3">
+  <form action="/create" method="POST">
+    <div class="form-horizontal">
+
+      <div class="form-group row mb-3">
+        <label for="name" class="col-form-label col-sm-2">이름</label>
+        <div class="col-sm-8">
+          <input class="form-control" type="text" name="name" id="name" placeholder="서울설렁탕">
         </div>
       </div>
-
-      <!-- <div class="form-group mb-3">
-        <label for="address">주소:</label>
-        <input type="text" class="form-control" id="address" placeholder="주소">
+  
+      <div class="form-group row mb-3">
+        <label for="postcode" class="col-form-label col-sm-2">우편번호</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호"/>
+        </div>
+        <div class="col-sm-3">
+          <input type="button" class="btn btn-md btn-outline-success" onclick="execDaumPostcode()" value="우편번호 찾기"/>
+        </div>
       </div>
-      <div class="form-group mb-3">
-        <label for="address">상세주소:</label>
-        <input type="text" class="form-control" id="detailAddress" placeholder="상세주소">
-      </div>
-      <div class="form-group mb-3">
-        <label for="address">참고항목:</label>
-        <input type="text" class="form-control" id="extraAddress" placeholder="참고항목">
-      </div>
-      <div class="form-group mb-3">
-        <label for="brand">브랜드:</label>
-        <input type="text" class="form-control" id="brand" placeholder="유명브랜드">
-      </div> -->
-      
-      
-
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="check">
-        <label for="check" class="form-check-label">약관에 동의합니다.</label>
+  
+      <div class="form-group row mb-3">
+        <label class="col-form-label col-sm-2" for="address">주소</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="address" id="address" placeholder="주소">
+        </div>
       </div>
 
-      <button type="button" class="btn btn-primary">등록</button>
+      <div class="form-group row mb-3">
+        <label for="detailAddress" class="col-form-label col-sm-2">상세주소</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소">
+        </div>
+      </div>
 
-    </form>
-  </div>
+      <div class="form-group row mb-3">
+        <label for="extraAddress" class="col-form-label col-sm-2">참고항목</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목"/>
+        </div>
+      </div>
+
+      <div class="form-group row mb-3">
+        <label for="type" class="col-form-label col-sm-2">종류</label>
+        <div class="col-sm-8">
+          <select name="type" id="type" class="form-select">
+            <option selected>음식 종류를 선택하십시오</option>
+            <option value="한식">한식</option>
+            <option value="양식">양식</option>
+            <option value="일식">일식</option>
+            <option value="중식">중식</option>
+            <option value="분식">분식</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row mb-3">
+        <label for="brand" class="col-form-label col-sm-2">브랜드</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="brand" placeholder="유명브랜드">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row mb-3">
+      <label for="area" class="col-form-label col-sm-2">면적</label>
+      <div class="col-sm-8">
+        <input type="number" class="form-control" name="area" id="area" placeholder="면적">
+      </div>
+    </div>
+
+    <div class="form-group row mb-3">
+      <label for="consumption" class="col-form-label col-sm-2">평균소비량</label>
+      <div class="col-sm-8">
+        <input type="number" class="form-control" id="consumption" name="consumption" placeholder="123 kg/월">
+      </div>
+    </div>
+    
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="check">
+      <label for="check" class="form-check-label">
+        <a href="">약관</a>에 동의합니다.</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">등록</button>
+
+  </form>
+</div>
+
 <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
   <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 </div>
