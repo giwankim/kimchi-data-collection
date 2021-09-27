@@ -1,20 +1,25 @@
 const path = require("path");
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
-const db = require("./src/db");
+const db = require("./db");
 
 const PORT = process.env.PORT || 3000;
 
-// express server
+// Express server
 const app = express();
 
-// server configuration
+// Server configuration
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "..", "views"));
 app.set(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 
-// routes
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server listening at port ${PORT} (http://localhost:3000)`);
+});
+
+// Routes
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -58,54 +63,108 @@ app.get("/edit/:id", (req, res) => {
 // POST /edit/5
 app.post("/edit/:id", (req, res) => {
   const id = req.params.id;
-  // const body = req.body;
-  // const restaurant = [
-  //   body.name,
-  //   body.zip,
-  //   body.address,
-  //   body.detail_address,
-  //   body.extra_address,
-  //   body.brand,
-  //   body.area,
-  //   body.consumption,
-  //   body.approved,
-  //   id,
-  // ];
-  const {
-    name,
-    zip,
-    address,
-    detail_address,
-    extra_address,
-    brand,
-    area,
-    consumption,
-    approved,
-  } = body;
+  const body = req.body;
   const restaurant = [
-    name,
-    zip,
-    address,
-    detail_address,
-    extra_address,
-    brand,
-    area,
-    consumption,
-    approved,
+    body.name,
+    body.postcode,
+    body.address,
+    body.detailAddress,
+    body.type,
+    body.brand,
+    body.area,
+    body.consumption,
+    body.approved,
     id,
   ];
   const sql =
-    "UPDATE Restaurant SET name = ?, zip = ?, address = ?, detail_address = ?, extra_address = ?, brand = ?, area = ?, consumption = ?, approved = ? WHERE (id = ?)";
+    "UPDATE Restaurant SET name = ?, postcode = ?, address = ?, detail_address = ?, type = ?, brand = ?, area = ?, consumption = ?, approved = ? WHERE (id = ?)";
   db.run(sql, restaurant, (err) => {
     if (err) {
       console.error(err.message);
       return;
     }
-    res.redirect("restaurant");
+    res.redirect("/admin");
   });
 });
 
-// start server
-app.listen(PORT, () => {
-  console.log(`Server listening at port ${PORT} (http://localhost:3000)`);
+// GET /create
+// app.get("/create", (req, res) => {
+//   res.render("create", { model: {} });
+// });
+
+// POST /create
+app.post("/create", (req, res) => {
+  const sql =
+    "INSERT INTO Restaurant (name, postcode, address, detail_address, type, brand, area, consumption, approved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'false');";
+  const body = req.body;
+  const restaurant = [
+    body.name,
+    body.postcode,
+    body.address,
+    body.detailAddress,
+    body.type,
+    body.brand,
+    body.area,
+    body.consumption,
+    body.approved,
+  ];
+  db.run(sql, restaurant, (err) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    res.redirect("/");
+  });
+});
+
+// GET /delete/5
+app.get("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM Restaurant WHERE id = ?";
+  db.get(sql, id, (err, row) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    res.render("delete", { model: row });
+  });
+});
+
+// POST /delete/5
+app.post("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM Restaurant WHERE id = ?";
+  db.run(sql, id, (err) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    res.redirect("/admin");
+  });
+});
+
+// GET /approve/5
+app.get("/approve/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM Restaurant WHERE id = ?";
+  db.get(sql, id, (err, row) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    res.render("approve", { model: row });
+  });
+});
+
+// POST /approve/5
+app.post("/approve/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "UPDATE Restaurant SET approved = 'true' WHERE id = ?";
+  db.run(sql, id, (err) => {
+    if (err) {
+      console.error(err.message);
+      return;
+    }
+    res.redirect("/admin");
+  });
 });
