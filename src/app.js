@@ -33,7 +33,8 @@ app.get("/restaurant", (req, res) => {
 });
 
 app.get("/manufacturer", (req, res) => {
-  res.send("manufacturer page");
+  res.render("manufacturer");
+  // res.send("manufacturer page");
 });
 
 app.get("/admin", (req, res) => {
@@ -87,13 +88,8 @@ app.post("/edit/:id", (req, res) => {
   });
 });
 
-// GET /create
-// app.get("/create", (req, res) => {
-//   res.render("create", { model: {} });
-// });
-
-// POST /create
-app.post("/create", (req, res) => {
+// POST /create/confirm
+app.post("/create/confirm", (req, res) => {
   const sql =
     "INSERT INTO Restaurant (name, postcode, address, detail_address, type, brand, area, consumption, approved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'false');";
   const body = req.body;
@@ -115,6 +111,31 @@ app.post("/create", (req, res) => {
     }
     res.redirect("/");
   });
+});
+
+// POST /create
+app.post("/create", (req, res) => {
+  const {
+    name,
+    postcode,
+    address,
+    detailAddress,
+    type,
+    brand,
+    area,
+    consumption,
+  } = req.body;
+  const restaurant = {
+    name,
+    postcode,
+    address,
+    detail_address: detailAddress,
+    type,
+    brand,
+    area,
+    consumption,
+  };
+  res.render("confirm", { model: restaurant });
 });
 
 // GET /delete/5
