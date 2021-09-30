@@ -34,7 +34,6 @@ app.get("/restaurant", (req, res) => {
 
 app.get("/manufacturer", (req, res) => {
   res.render("manufacturer");
-  // res.send("manufacturer page");
 });
 
 app.get("/admin", (req, res) => {
