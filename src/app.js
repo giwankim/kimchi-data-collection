@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
+const qr = require("qrcode");
 const db = require("./db");
 
 const PORT = process.env.PORT || 3000;
@@ -103,12 +104,22 @@ app.post("/create/confirm", (req, res) => {
     body.consumption,
     body.approved,
   ];
-  db.run(sql, restaurant, (err) => {
+  db.run(sql, restaurant, function (err) {
     if (err) {
       console.error(err.message);
       return;
     }
-    res.redirect("/");
+
+    const id = this.lastID;
+    const url = `https://www.futuresense.co.kr/kimchi/${id}`;
+
+    qr.toDataURL(url, (err, src) => {
+      if (err) {
+        console.error(err.message);
+        res.send("Error occured");
+      }
+      res.render("scan", { src });
+    });
   });
 });
 
