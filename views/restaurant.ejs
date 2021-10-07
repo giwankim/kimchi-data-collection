@@ -9,17 +9,17 @@
       <div class="form-group row mb-3">
         <label for="name" class="col-form-label col-sm-2">이름</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" name="name" id="name" placeholder="서울설렁탕">
+          <input class="form-control" type="text" name="name" id="name" placeholder="서울설렁탕" required>
         </div>
       </div>
   
       <div class="form-group row mb-3">
         <label for="postcode" class="col-form-label col-sm-2">우편번호</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호"/>
+          <input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" required/>
         </div>
         <div class="col-sm-3">
-          <input type="button" class="btn btn-md btn-outline-success" onclick="execDaumPostcode()" value="우편번호 찾기"/>
+          <input type="button" class="btn btn-md btn-outline-success" onclick="execDaumPostcode()" value="우편번호 찾기" required/>
         </div>
       </div>
   
@@ -38,9 +38,9 @@
       </div>
 
       <div class="form-group row mb-3">
-        <label for="extraAddress" class="col-form-label col-sm-2">참고항목</label>
+        <!-- <label for="extraAddress" class="col-form-label col-sm-2">참고항목</label> -->
         <div class="col-sm-8">
-          <input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목"/>
+          <input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" hidden/>
         </div>
       </div>
 
