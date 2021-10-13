@@ -1,7 +1,7 @@
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 
-// Connect to db
+// Connect to database
 const db_name = path.join(__dirname, "..", "data", "restaurant.db");
 const db = new sqlite3.Database(db_name, (err) => {
   if (err) {
@@ -32,7 +32,7 @@ db.run(sql_create, (err) => {
   }
   console.log("Created table 'Restaurant'");
 
-  // populate db with test data
+  // populate database with test data
   const sql_insert = `INSERT INTO Restaurant (id, name, postcode, address, detail_address, type, brand, area, consumption, approved) VALUES
     (1, '음식점1', '63309', '제주특별자치도 제주시 첨단로 242', '3층', '양식', '종가집', 123.45, 1000.5, 'false'),
     (2, '음식점2', '12345', '도로 한복판', '1층', '한식', 'CJ 푸드', 543.21, 50.1, 'false'),
