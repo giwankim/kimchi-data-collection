@@ -1,201 +1,35 @@
-const path = require("path");
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
-const qr = require("qrcode");
-const db = require("./db");
-
-const PORT = process.env.PORT || 3000;
+const path = require("path");
+const db = require("./config/database");
+const indexRouter = require("./routes/index");
+const createRouter = require("./routes/create");
+const updateRouter = require("./routes/update");
+const deleteRouter = require("./routes/delete");
+const approveRouter = require("./routes/approve");
 
 // Express server
 const app = express();
 
-// Server configuration
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "..", "views"));
-app.use(express.static(path.join(__dirname, "..", "public")));
-app.use(express.urlencoded({ extended: false }));
+// Static folder
+app.use(express.static(path.join(__dirname, "public")));
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server listening at port ${PORT} (http://localhost:3000)`);
-});
+// View engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// Body parser
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.use("/", indexRouter);
+app.use("/create", createRouter);
+app.use("/update", updateRouter);
+app.use("/delete", deleteRouter);
+app.use("/approve", approveRouter);
 
-app.get("/about", (req, res) => {
-  res.render("about");
-});
-
-app.get("/restaurant", (req, res) => {
-  res.render("restaurant");
-});
-
-app.get("/manufacturer", (req, res) => {
-  res.render("manufacturer");
-});
-
-app.get("/admin", (req, res) => {
-  const sql = "SELECT * FROM Restaurant ORDER BY id";
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.render("admin", { model: rows });
-  });
-});
-
-// GET /edit/5
-app.get("/edit/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "SELECT * FROM Restaurant where id = ?";
-  db.get(sql, id, (err, row) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.render("edit", { model: row });
-  });
-});
-
-// POST /edit/5
-app.post("/edit/:id", (req, res) => {
-  const id = req.params.id;
-  const body = req.body;
-  const restaurant = [
-    body.name,
-    body.postcode,
-    body.address,
-    body.detailAddress,
-    body.type,
-    body.brand,
-    body.area,
-    body.consumption,
-    body.approved,
-    id,
-  ];
-  const sql =
-    "UPDATE Restaurant SET name = ?, postcode = ?, address = ?, detail_address = ?, type = ?, brand = ?, area = ?, consumption = ?, approved = ? WHERE (id = ?)";
-  db.run(sql, restaurant, (err) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.redirect("/admin");
-  });
-});
-
-// POST /create/confirm
-app.post("/create/confirm", (req, res) => {
-  const sql =
-    "INSERT INTO Restaurant (name, postcode, address, detail_address, type, brand, area, consumption, approved) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'false');";
-  const body = req.body;
-  const restaurant = [
-    body.name,
-    body.postcode,
-    body.address,
-    body.detailAddress,
-    body.type,
-    body.brand,
-    body.area,
-    body.consumption,
-    body.approved,
-  ];
-  db.run(sql, restaurant, function (err) {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-
-    const id = this.lastID;
-    const url = `https://www.futuresense.co.kr/kimchi/${id}`;
-
-    qr.toDataURL(url, (err, src) => {
-      if (err) {
-        console.error(err.message);
-        res.send("Error occured");
-      }
-      res.render("scan", { src });
-    });
-  });
-});
-
-// POST /create
-app.post("/create", (req, res) => {
-  const {
-    name,
-    postcode,
-    address,
-    detailAddress,
-    type,
-    brand,
-    area,
-    consumption,
-  } = req.body;
-  const restaurant = {
-    name,
-    postcode,
-    address,
-    detail_address: detailAddress,
-    type,
-    brand,
-    area,
-    consumption,
-  };
-  res.render("confirm", { model: restaurant });
-});
-
-// GET /delete/5
-app.get("/delete/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "SELECT * FROM Restaurant WHERE id = ?";
-  db.get(sql, id, (err, row) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.render("delete", { model: row });
-  });
-});
-
-// POST /delete/5
-app.post("/delete/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "DELETE FROM Restaurant WHERE id = ?";
-  db.run(sql, id, (err) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.redirect("/admin");
-  });
-});
-
-// GET /approve/5
-app.get("/approve/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "SELECT * FROM Restaurant WHERE id = ?";
-  db.get(sql, id, (err, row) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.render("approve", { model: row });
-  });
-});
-
-// POST /approve/5
-app.post("/approve/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "UPDATE Restaurant SET approved = 'true' WHERE id = ?";
-  db.run(sql, id, (err) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.redirect("/admin");
-  });
+// Server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server listening at port ${PORT} (http://localhost:3000)`);
 });
