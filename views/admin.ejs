@@ -1,4 +1,6 @@
-<%- include('./partials/_header') -%>
+<%- include('./partials/header') %>
+
+<%- include("./partials/navbar") %>
 
 <h3 class="text-center">관리자</h3>
 
@@ -26,7 +28,7 @@
             <td><%= restaurant.postcode %></td>
             <td><%= restaurant.address %></td>
             <td><%= restaurant.detail_address %></td>
-            <td><%= restaurant.type %></td>
+            <td><%= restaurant.cuisine %></td>
             <td><%= restaurant.brand %></td>
             <td><%= restaurant.area %></td>
             <td><%= restaurant.consumption %></td>
@@ -52,4 +54,4 @@
   </div>
 </div>
 
-<%- include('./partials/_footer') -%>
+<%- include('./partials/footer') -%>
