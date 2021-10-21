@@ -1,4 +1,5 @@
-const db = require("../config/database");
+const Restaurant = require("../models/restaurant");
+const Manufacturer = require("../models/Manufacturer");
 
 exports.index = (req, res) => {
   res.render("index");
@@ -16,13 +17,11 @@ exports.manufacturer = (req, res) => {
   res.render("manufacturer");
 };
 
-exports.admin = (req, res) => {
-  const sql = "SELECT * FROM Restaurant ORDER BY id";
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    res.render("admin", { model: rows });
-  });
+exports.admin = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({});
+    res.render("admin", { model: restaurants });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
