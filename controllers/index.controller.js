@@ -1,4 +1,4 @@
-const Restaurant = require("../models/restaurant");
+const Restaurant = require("../models/Restaurant");
 const Manufacturer = require("../models/Manufacturer");
 
 exports.index = (req, res) => {
