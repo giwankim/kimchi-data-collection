@@ -20,7 +20,8 @@ exports.manufacturer = (req, res) => {
 exports.admin = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({});
-    res.render("admin", { model: restaurants });
+    const manufacturers = await Manufacturer.find({});
+    res.render("admin", { model: { restaurants, manufacturers } });
   } catch (error) {
     res.status(500).send(error);
   }

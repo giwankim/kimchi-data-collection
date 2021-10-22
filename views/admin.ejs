@@ -1,15 +1,13 @@
-<%- include('./partials/header') %>
+<%- include('./partials/header') %> <%- include("./partials/navbar") %>
 
-<%- include("./partials/navbar") %>
-
-<h3 class="text-center">관리자</h3>
-
-<div class="container">
+<!-- restaurants -->
+<div class="container py-3">
+  <h3 class="text-center">음식점</h3>
   <div class="table-responsive-sm">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>이름</th>
+          <th>식당</th>
           <th>우편번호</th>
           <th>주소</th>
           <th>상세주소</th>
@@ -22,32 +20,95 @@
         </tr>
       </thead>
       <tbody>
-        <% for (const restaurant of model) { %>
-          <tr>
-            <td><%= restaurant.name %></td>
-            <td><%= restaurant.postcode %></td>
-            <td><%= restaurant.address %></td>
-            <td><%= restaurant.detail_address %></td>
-            <td><%= restaurant.cuisine %></td>
-            <td><%= restaurant.brand %></td>
-            <td><%= restaurant.area %></td>
-            <td><%= restaurant.consumption %></td>
-            <td><%= restaurant.approved %></td>
-            <td class="d-print-none">
-              <a class="btn btn-sm btn-warning" href="/update/<%= restaurant.id %>">
-                <i class="bi bi-pencil-square"></i>
-                수정
-              </a>
-              <a class="btn btn-sm btn-danger" href="/delete/<%= restaurant.id %>">
-                <i class="bi bi-trash"></i>
-                삭제
-              </a>
-              <a class="btn btn-sm btn-primary" href="/approve/<%= restaurant.id %>">
-                <i class="bi bi-check-lg"></i>
-                승인
-              </a>
-            </td>
-          </tr>
+        <% for (const restaurant of model.restaurants) { %>
+        <tr>
+          <td><%= restaurant.name %></td>
+          <td><%= restaurant.postcode %></td>
+          <td><%= restaurant.address %></td>
+          <td><%= restaurant.detail_address %></td>
+          <td><%= restaurant.cuisine %></td>
+          <td><%= restaurant.brand %></td>
+          <td><%= restaurant.area %></td>
+          <td><%= restaurant.consumption %></td>
+          <td><%= restaurant.approved %></td>
+          <td class="d-print-none">
+            <a
+              class="btn btn-sm btn-warning"
+              href="restaurant/<%= restaurant._id %>/update"
+            >
+              <i class="bi bi-pencil-square"></i>
+              수정
+            </a>
+            <a
+              class="btn btn-sm btn-danger"
+              href="/restaurant/<%= restaurant._id %>/delete"
+            >
+              <i class="bi bi-trash"></i>
+              삭제
+            </a>
+            <a
+              class="btn btn-sm btn-primary"
+              href="/restaurant/<%= restaurant._id %>/approve"
+            >
+              <i class="bi bi-check-lg"></i>
+              승인
+            </a>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- manufacturers -->
+<div class="container py-3">
+  <h3 class="text-center">제조사</h3>
+  <div class="table-responsive-sm">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>제조사</th>
+          <th>우편번호</th>
+          <th>주소</th>
+          <th>상세주소</th>
+          <th>생산량</th>
+          <th>승인</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const manufacturer of model.manufacturers) { %>
+        <tr>
+          <td><%= manufacturer.name %></td>
+          <td><%= manufacturer.postcode %></td>
+          <td><%= manufacturer.address %></td>
+          <td><%= manufacturer.detail_address %></td>
+          <td><%= manufacturer.production %></td>
+          <td><%= manufacturer.approved %></td>
+          <td class="d-print-none">
+            <a
+              class="btn btn-sm btn-warning"
+              href="manufacturer/<%= manufacturer._id %>/update"
+            >
+              <i class="bi bi-pencil-square"></i>
+              수정
+            </a>
+            <a
+              class="btn btn-sm btn-danger"
+              href="/manufacturer/<%= manufacturer._id %>/delete"
+            >
+              <i class="bi bi-trash"></i>
+              삭제
+            </a>
+            <a
+              class="btn btn-sm btn-primary"
+              href="/manufacturer/<%= manufacturer._id %>/approve"
+            >
+              <i class="bi bi-check-lg"></i>
+              승인
+            </a>
+          </td>
+        </tr>
         <% } %>
       </tbody>
     </table>

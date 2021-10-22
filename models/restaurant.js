@@ -9,7 +9,7 @@ const RestaurantSchema = new Schema({
   cuisine: {
     type: String,
     required: true,
-    enum: ["한식", "양식", "중식", "일식", "분식", "기타"],
+    enum: ["한식", "중식", "일식", "분식", "기타"],
   },
   brand: { type: String, required: true },
   area: { type: Schema.Types.Decimal128, required: true },
