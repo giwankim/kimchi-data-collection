@@ -5,16 +5,14 @@
 <h3 class="text-center">식당 등록</h3>
 
 <div class="container py-3">
-  <form action="/create" method="POST">
+  <form action="/restaurant" method="POST">
     <div class="form-horizontal">
-
       <div class="form-group row mb-3">
-        <label for="name" class="col-form-label col-sm-2">이름</label>
+        <label for="name" class="col-form-label col-sm-2">식당명</label>
         <div class="col-sm-8">
-          <input class="form-control" type="text" name="name" id="name" placeholder="서울설렁탕" required>
+          <input class="form-control" type="text" name="name" id="name" placeholder="식당명" required>
         </div>
       </div>
-  
       <div class="form-group row mb-3">
         <label for="postcode" class="col-form-label col-sm-2">우편번호</label>
         <div class="col-sm-5">
@@ -24,32 +22,28 @@
           <input type="button" class="btn btn-md btn-outline-success" onclick="execDaumPostcode()" value="우편번호 찾기" required/>
         </div>
       </div>
-  
       <div class="form-group row mb-3">
         <label class="col-form-label col-sm-2" for="address">주소</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" name="address" id="address" placeholder="주소">
         </div>
       </div>
-
       <div class="form-group row mb-3">
         <label for="detailAddress" class="col-form-label col-sm-2">상세주소</label>
         <div class="col-sm-8">
           <input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소">
         </div>
       </div>
-
       <div class="form-group row mb-3">
         <!-- <label for="extraAddress" class="col-form-label col-sm-2">참고항목</label> -->
         <div class="col-sm-8">
           <input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" hidden/>
         </div>
       </div>
-
       <div class="form-group row mb-3">
-        <label for="type" class="col-form-label col-sm-2">종류</label>
+        <label for="cuisine" class="col-form-label col-sm-2">종류</label>
         <div class="col-sm-8">
-          <select name="type" id="type" class="form-select">
+          <select name="cuisine" id="cuisine" class="form-select">
             <option selected>음식 종류를 선택하십시오</option>
             <option value="한식">한식</option>
             <option value="양식">양식</option>
@@ -60,7 +54,6 @@
           </select>
         </div>
       </div>
-
       <div class="form-group row mb-3">
         <label for="brand" class="col-form-label col-sm-2">제조사</label>
         <div class="col-sm-8">
@@ -68,21 +61,18 @@
         </div>
       </div>
     </div>
-
     <div class="form-group row mb-3">
       <label for="area" class="col-form-label col-sm-2">면적</label>
       <div class="col-sm-8">
         <input type="number" class="form-control" name="area" id="area" placeholder="면적">
       </div>
     </div>
-
     <div class="form-group row mb-3">
       <label for="consumption" class="col-form-label col-sm-2">평균소비량</label>
       <div class="col-sm-8">
         <input type="number" class="form-control" id="consumption" name="consumption" placeholder="kg/월">
       </div>
     </div>
-    
     <div class="form-check mb-3">
       <input type="checkbox" class="form-check-input" id="check">
       <label for="check" class="form-check-label">
@@ -101,6 +91,8 @@
 </div>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<!-- Address Lookup Script -->
 <script>
   // 우편번호 찾기 찾기 화면을 넣을 element
   const element_wrap = document.getElementById('wrap');

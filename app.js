@@ -3,11 +3,18 @@ require("dotenv").config({ path: "./envs/.env.development" });
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
+
+/**
+ * TODO: delete after separating routes
+ */
 const indexRouter = require("./routes/index");
 const createRouter = require("./routes/create");
 const updateRouter = require("./routes/update");
 const deleteRouter = require("./routes/delete");
 const approveRouter = require("./routes/approve");
+
+const manufacturerRouter = require("./routes/manufacturer");
+const restaurantRouter = require("./routes/restaurant");
 
 /**
  * TODO: delete when done migrating to MongoDB
@@ -39,6 +46,12 @@ app.use(express.json());
 
 // Routes
 app.use("/", indexRouter);
+app.use("/restaurant", restaurantRouter);
+app.use("/manufacturer", restaurantRouter);
+
+/**
+ * TODO: refactor into restaurant and manufacturer routes
+ */
 app.use("/create", createRouter);
 app.use("/update", updateRouter);
 app.use("/delete", deleteRouter);
