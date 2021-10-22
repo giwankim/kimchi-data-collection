@@ -12,6 +12,7 @@ const ManufacturerSchema = new Schema({
     required: true,
     default: false,
   },
+  type: { type: String, required: true, default: "제조업체" },
 });
 
 const Manufacturer = mongoose.model("Manufacturer", ManufacturerSchema);

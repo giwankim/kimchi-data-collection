@@ -19,6 +19,7 @@ const RestaurantSchema = new Schema({
     required: true,
     default: false,
   },
+  type: { type: String, required: true, default: "음식점" },
 });
 
 const Restaurant = mongoose.model("Restaurant", RestaurantSchema);

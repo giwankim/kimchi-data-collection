@@ -4,8 +4,6 @@ const mongoose = require("mongoose");
 const Restaurant = require("./models/Restaurant");
 const Manufacturer = require("./models/Manufacturer");
 
-// faker.locale = "ko";
-
 // Connect to DB
 mongoose
   .connect(process.env.DB_STRING, {
@@ -21,6 +19,7 @@ mongoose
 
 const main = async () => {
   for (let i = 0; i < 10; i++) {
+    // restaurant
     const restaurant = await Restaurant.create({
       name: faker.name.findName(),
       postcode: faker.address.zipCode(),
@@ -31,7 +30,7 @@ const main = async () => {
       area: faker.finance.amount(),
       consumption: faker.finance.amount(),
     });
-
+    // manufacturer
     const manufacturer = await Manufacturer.create({
       name: faker.name.findName(),
       postcode: faker.address.zipCode(),

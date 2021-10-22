@@ -26,26 +26,32 @@ exports.createRestaurant = (req, res) => {
 };
 
 exports.createRestaurantConfirm = async (req, res) => {
-  const {
-    name,
-    postcode,
-    address,
-    detailAddress,
-    cuisine,
-    brand,
-    area,
-    consumption,
-  } = req.body;
-  const restaurant = await Restaurant.create({
-    name,
-    postcode,
-    address,
-    detail_address: detailAddress,
-    cuisine,
-    brand,
-    area,
-    consumption,
-  });
+  // Create restaurant document
+  try {
+    const {
+      name,
+      postcode,
+      address,
+      detailAddress,
+      cuisine,
+      brand,
+      area,
+      consumption,
+    } = req.body;
+    await Restaurant.create({
+      name,
+      postcode,
+      address,
+      detail_address: detailAddress,
+      cuisine,
+      brand,
+      area,
+      consumption,
+    });
+    res.redirect("/");
+  } catch (err) {
+    res.status(500).send(err);
+  }
 
   // Generate QR code
   const url = `https://www.futuresense.co.kr/kimchi/${restaurant._id}`;
@@ -57,7 +63,7 @@ exports.createRestaurantConfirm = async (req, res) => {
   });
 };
 
-exports.updateRestaurantGet = async (req, res) => {
+exports.updateRestaurant = async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.id);
     res.render("edit", { model: restaurant });
@@ -66,8 +72,51 @@ exports.updateRestaurantGet = async (req, res) => {
   }
 };
 
-exports.updateRestaurantPost = async (req, res) => {};
+exports.updateRestaurantConfirm = async (req, res) => {
+  try {
+    const restaurant = {
+      ...req.body,
+      detail_address: req.body.detailAddress,
+    };
+    await Restaurant.findByIdAndUpdate(req.params.id, restaurant);
+    res.redirect("/admin");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
 
-exports.deleteRestaurant = (req, res) => {};
+exports.deleteRestaurant = async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id);
+    res.render("delete", { model: restaurant });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
 
-exports.deleteRestaurantConfirm = async (req, res) => {};
+exports.deleteRestaurantConfirm = async (req, res) => {
+  try {
+    await Restaurant.findByIdAndDelete(req.params.id);
+    res.redirect("/admin");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+exports.approveRestaurant = async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id);
+    res.render("approve", { model: restaurant });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+exports.approveRestaurantConfirm = async (req, res) => {
+  try {
+    await Restaurant.findByIdAndUpdate(req.params.id, { approved: true });
+    res.redirect("/admin");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
