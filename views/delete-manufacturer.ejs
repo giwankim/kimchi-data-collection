@@ -2,18 +2,18 @@
 
 <%- include("./partials/navbar") %>
 
-<h3 class="text-center py-3">승인</h3>
+<h3 class="text-center py-3">삭제</h3>
 
 <div class="container">
-  <form action="/restaurant/<%= model.id %>/approve" method="post">
+  <form action="/manufacturer/<%= model._id %>/delete" method="post">
     <div class="form-horizontal">
 
-      <%- include("./partials/display") -%>
+      <%- include("./partials/display-manufacturer") %>
 
       <div class="form-group row">
         <label class="col-form-label col-sm-2"></label>
         <div class="col-sm-10">
-          <input type="submit" value="승인" class="btn btn-default btn-primary">
+          <input type="submit" value="삭제" class="btn btn-default btn-primary">
           <a href="/admin" class="btn btn-outline-dark cancel">취소</a>
         </div>
       </div>

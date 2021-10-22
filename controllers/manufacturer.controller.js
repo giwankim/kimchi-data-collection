@@ -53,7 +53,7 @@ exports.updateManufacturerConfirm = async (req, res) => {
 exports.deleteManufacturer = async (req, res) => {
   try {
     const manufacturer = await Manufacturer.findById(req.params.id);
-    res.render("delete", { model: manufacturer });
+    res.render("delete-manufacturer", { model: manufacturer });
   } catch (err) {
     res.status(500).send(err);
   }

@@ -1,12 +1,14 @@
-<%- include("./partials/header") -%>
+<%- include("./partials/header") %>
+
+<%- include("./partials/navbar") %>
 
 <h3 class="text-center py-3">삭제</h3>
 
 <div class="container">
-  <form action="/restaurant/<%= model.id %>/delete" method="post">
+  <form action="/restaurant/<%= model._id %>/delete" method="post">
     <div class="form-horizontal">
 
-      <%- include("./partials/display") -%>
+      <%- include("./partials/display") %>
 
       <div class="form-group row">
         <label class="col-form-label col-sm-2"></label>
