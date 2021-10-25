@@ -7,9 +7,11 @@ const indexRouter = require("./routes/index");
 const manufacturerRouter = require("./routes/manufacturer");
 const restaurantRouter = require("./routes/restaurant");
 
+let { MONGO_URI, PORT } = process.env;
+
 // Connect to DB
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -17,7 +19,7 @@ mongoose
     console.log("Connected to MongoDB...");
   })
   .catch((error) => {
-    console.log("Error connecting to MongoDB...");
+    console.log(`Error connecting to MongoDB: ${MONGO_URI}`);
   });
 
 // Express
@@ -40,7 +42,7 @@ app.use((req, res) => {
 });
 
 // Server
-const PORT = process.env.PORT || 3000;
+PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening at port ${PORT}`);
 });
