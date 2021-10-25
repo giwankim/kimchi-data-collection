@@ -1,4 +1,4 @@
-const Manufacturer = require("../models/Manufacturer");
+const Manufacturer = require("../models/manufacturer.entity");
 
 exports.createManufacturer = (req, res) => {
   const { name, postcode, address, detailAddress, production } = req.body;

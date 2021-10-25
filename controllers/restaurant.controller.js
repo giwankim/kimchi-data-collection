@@ -1,5 +1,5 @@
 const qr = require("qrcode");
-const Restaurant = require("../models/Restaurant");
+const Restaurant = require("../models/restaurant.entity");
 
 exports.createRestaurant = (req, res) => {
   const {

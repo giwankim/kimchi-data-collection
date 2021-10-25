@@ -1,5 +1,5 @@
-const Restaurant = require("../models/Restaurant");
-const Manufacturer = require("../models/Manufacturer");
+const Restaurant = require("../models/restaurant.entity");
+const Manufacturer = require("../models/manufacturer.entity");
 
 exports.index = (req, res) => {
   res.render("index");

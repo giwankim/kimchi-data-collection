@@ -1,12 +1,13 @@
 require("dotenv").config({ path: "./envs/.env.development" });
+// require("dotenv").config({ path: "./envs/.env.production" });
 const faker = require("faker");
 const mongoose = require("mongoose");
-const Restaurant = require("./models/Restaurant");
-const Manufacturer = require("./models/Manufacturer");
+const Restaurant = require("./models/restaurant.entity");
+const Manufacturer = require("./models/manufacturer.entity");
 
 // Connect to DB
 mongoose
-  .connect(process.env.DB_STRING, {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
