@@ -1,17 +1,15 @@
 require("dotenv").config({ path: "./envs/.env.development" });
 // require("dotenv").config({ path: "./envs/.env.production" });
-
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-
 const indexRouter = require("./routes/index");
 const manufacturerRouter = require("./routes/manufacturer");
 const restaurantRouter = require("./routes/restaurant");
 
 // Connect to DB
 mongoose
-  .connect(process.env.DB_STRING, {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -36,7 +34,6 @@ app.use(express.json());
 app.use("/", indexRouter);
 app.use("/restaurant", restaurantRouter);
 app.use("/manufacturer", manufacturerRouter);
-
 // Error page
 app.use((req, res) => {
   res.render("notfound");

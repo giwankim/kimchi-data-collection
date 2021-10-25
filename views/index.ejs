@@ -6,7 +6,8 @@
   class="masthead "
   style="
     background-image: url('/assets/img/kimchi-bg.jpeg');
-    height: 300px;
+    height:300px;
+    background-position: center;
     background-repeat: no-repeat;
   "
 >
@@ -23,29 +24,24 @@
 
 <!-- <%- include('./partials/carousel') %> -->
 
-<div class="row py-3">
+<!-- cards -->
+<div class="row py-3" style="position: relative;">
   <div class="col-sm-6">
     <div class="card">
-      <img src="/assets/img/kimchi.jpeg" alt="Card image cap" class="card-img-top" />
+        <img src="/assets/img/kimchi.jpeg" alt="Card image cap" class="card-img-top"/>
       <div class="card-body">
         <h5 class="card-title">음식점 등록</h5>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
+        <p class="card-text">국산김치를 사용하는 식당을 등록해 주세요</p>
         <a href="/restaurant" class="btn btn-primary">식당 등록</a>
-      </div>
+      </div> 
     </div>
   </div>
   <div class="col-sm-6">
     <div class="card">
-      <img src="/assets/img/manufacturing-kimchi.jpeg" alt="Card image cap" class="card-img-top" />
+      <img src="/assets/img/manufacturing-kimchi.jpeg" alt="Card image cap" class="card-img-top"/>
       <div class="card-body">
         <h5 class="class-title">제조업체 등록</h5>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
+        <p class="card-text">국산김치를 제조하는 업체를 등록해 주세요</p>
         <a href="/manufacturer" class="btn btn-primary">제조업체 등록</a>
       </div>
     </div>

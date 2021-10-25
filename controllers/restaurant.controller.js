@@ -38,7 +38,7 @@ exports.createRestaurantConfirm = async (req, res) => {
       area,
       consumption,
     } = req.body;
-    await Restaurant.create({
+    const restaurant = await Restaurant.create({
       name,
       postcode,
       address,
@@ -48,19 +48,13 @@ exports.createRestaurantConfirm = async (req, res) => {
       area,
       consumption,
     });
-    res.redirect("/");
+    // Generate QR code
+    const url = `https://www.futuresense.co.kr/kimchi/${restaurant._id}`;
+    const qrImg = await qr.toDataURL(url);
+    res.render("scan", { qrImg });
   } catch (err) {
     res.status(500).send(err);
   }
-
-  // Generate QR code
-  const url = `https://www.futuresense.co.kr/kimchi/${restaurant._id}`;
-  qr.toDataURL(url, (err, qrImg) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.render("scan", { qrImg });
-  });
 };
 
 exports.updateRestaurant = async (req, res) => {
