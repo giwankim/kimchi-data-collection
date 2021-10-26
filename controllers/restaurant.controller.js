@@ -114,3 +114,25 @@ exports.approveRestaurantConfirm = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+exports.generateQrcode = async (req, res) => {
+  /**
+   * TODO!!!
+   */
+  const url = `http://3.34.64.241/restaurant/${req.params.id}/qrinfo`;
+  qr.toDataURL(url, (err, qrImg) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.send(qrImg);
+  });
+};
+
+exports.qrinfo = async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.id);
+    res.render("view-qrcode", { model: restaurant });
+  } catch (err) {
+    res.status(404).send(err);
+  }
+};

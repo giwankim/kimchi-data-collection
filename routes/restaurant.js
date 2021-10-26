@@ -11,5 +11,7 @@ router.get("/:id/delete", restaurantController.deleteRestaurant);
 router.post("/:id/delete", restaurantController.deleteRestaurantConfirm);
 router.get("/:id/approve", restaurantController.approveRestaurant);
 router.post("/:id/approve", restaurantController.approveRestaurantConfirm);
+router.post("/:id/info", restaurantController.generateQrcode);
+router.get("/:id/qrinfo", restaurantController.qrinfo);
 
 module.exports = router;

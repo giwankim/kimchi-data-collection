@@ -26,3 +26,12 @@ exports.admin = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+exports.info = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({});
+    res.render("info", { model: { restaurants } });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
