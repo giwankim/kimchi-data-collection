@@ -99,10 +99,8 @@
         $('#exampleModalCenter').modal('show');
         $('.modal-body #modalInput').val(val);
 
-        /**
-         * TODO!!!
-         */ 
         var url = `http://3.34.64.241:3000/restaurant/${val}/info`;
+        // var url = `http://localhost:3000/restaurant/${val}/info`;
 
         fetch(url, {
           method: "POST",
