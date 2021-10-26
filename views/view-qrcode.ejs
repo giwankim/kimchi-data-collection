@@ -8,13 +8,13 @@
         <%- include("./partials/editor-qrcode") -%>
       
      </div>
+  
+<%- include("./partials/maps") -%>  
   </div>
 <%- include("./partials/footer") -%>
 
 <script>
   var type = `<%=model.cuisine%>`;
-  // document.getElementById('food-img').src = "/assets/img/gopher.png";
-
   if(type==="한식"){
     document.getElementById('food-img').src = "/assets/img/korea.jpg";
   }else if(type==="일식"){

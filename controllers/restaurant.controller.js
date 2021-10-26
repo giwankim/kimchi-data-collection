@@ -49,7 +49,6 @@ exports.createRestaurantConfirm = async (req, res, next) => {
       consumption,
     });
     // Generate QR code
-    // const url = `https://www.futuresense.co.kr/kimchi/${restaurant._id}`;
     const url = `http://3.34.64.241/restaurant/${restaurant._id}/qrinfo`;
     const qrImg = await qr.toDataURL(url);
     res.render("scan", { qrImg });
@@ -135,12 +134,15 @@ exports.qrinfo = async (req, res, next) => {
   }
 };
 
+// IN_PROGRESS
 exports.getRestaurants = async (req, res, next) => {
   const perPage = 10;
   const page = req.params.page || 1;
   try {
-    const restaurants = await Restaurant.find({});
     const totalCount = await Restaurant.count();
+    const restaurants = await Restaurant.find({})
+      .skip(perPage * (page - 1))
+      .limit(perPage);
   } catch (err) {
     next(err);
   }
