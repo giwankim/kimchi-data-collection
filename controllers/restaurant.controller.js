@@ -1,3 +1,5 @@
+require("dotenv").config({ path: "./envs/.env.production" });
+const { default: axios } = require("axios");
 const qr = require("qrcode");
 const Restaurant = require("../models/restaurant.entity");
 
@@ -134,15 +136,50 @@ exports.qrinfo = async (req, res, next) => {
   }
 };
 
-// IN_PROGRESS
-exports.getRestaurants = async (req, res, next) => {
-  const perPage = 10;
-  const page = req.params.page || 1;
+exports.didvc = async (req, res, next) => {
   try {
-    const totalCount = await Restaurant.count();
-    const restaurants = await Restaurant.find({})
-      .skip(perPage * (page - 1))
-      .limit(perPage);
+    const url = process.env.API_URL;
+    const key = process.env.API_KEY;
+    const id = req.params.id;
+
+    const restaurant = await Restaurant.findById(id);
+
+    const bodydata = {
+      _id: id,
+
+      manufacturer: "2d715b40-c85f-4595-b88e-c7fb9befd016",
+      type_of_kimchi: "자가제조",
+      composition: "국내제조",
+      consumption_amount: Math.trunc(restaurant.consumption),
+
+      name: restaurant.name,
+      province: restaurant.detail_address,
+      district: restaurant.detail_address,
+      postal_code: restaurant.postcode,
+      address: restaurant.address,
+      cuisine: restaurant.cuisine,
+      area: Math.trunc(restaurant.area),
+    };
+
+    axios
+      .post(`${url}/v2/composite/restaurant`, bodydata, {
+        headers: {
+          Authorization: `Bearer ${key}`,
+        },
+      })
+      .then((response) => {
+        const { data } = response;
+        const document = JSON.stringify(data.didDocument);
+        const did = JSON.stringify(data.didDocument.id);
+        const authVc = JSON.stringify(data.restaurantRegistration);
+        const vc = JSON.stringify(data.restaurantConsumption);
+
+        res.render("didvc", { restaurant, document, did, authVc, vc });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.redirect("/admin");
+      });
   } catch (err) {
     next(err);
   }

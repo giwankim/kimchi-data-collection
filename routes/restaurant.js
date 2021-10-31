@@ -13,5 +13,6 @@ router.get("/:id/approve", restaurantController.approveRestaurant);
 router.post("/:id/approve", restaurantController.approveRestaurantConfirm);
 router.post("/:id/info", restaurantController.generateQrcode);
 router.get("/:id/qrinfo", restaurantController.qrinfo);
+router.get("/:id/didvc", restaurantController.didvc);
 
 module.exports = router;

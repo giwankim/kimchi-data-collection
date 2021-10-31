@@ -1,0 +1,36 @@
+<%- include("./partials/header") %> <%- include('./partials/navbar') %> 
+
+<div class="container">
+
+  <div class="form-group row mb-3">
+    <label class="col-form-label col-sm-2" for="did">DID</label>
+      <div class="col-sm-8">
+        <input type="text" readonly class="form-control" name="did" id="did" value="<%= did %>"/>
+      </div>
+  </div>
+
+  <div class="form-group row mb-3">
+    <label class="col-form-label col-sm-2" for="document">DID Document</label>
+      <div class="col-sm-8">
+        <textarea type="text" readonly class="form-control" name="document" id="document" style="height:300px"/><%= document %></textarea>
+      </div>
+  </div>
+
+  <div class="form-group row mb-3">
+    <label class="col-form-label col-sm-2" for="authVc">인증VC</label>
+      <div class="col-sm-8">
+        <textarea type="text" readonly class="form-control" name="authVc" id="authVc" style="height:300px"/><%= authVc %></textarea>
+      </div>
+  </div>
+
+  <div class="form-group row mb-3">
+    <label class="col-form-label col-sm-2" for="vc">소비VC</label>
+      <div class="col-sm-8">
+        <textarea type="text" readonly class="form-control" name="vc" id="vc" style="height:300px"/><%= vc %></textarea>
+      </div>
+  </div>
+
+  <a href="/admin"><button type="button" class="btn btn-primary">뒤로가기</button></a>
+</div>
+
+<%- include("./partials/footer") %>
